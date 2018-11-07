@@ -18,6 +18,7 @@
 		4C59D8522192775100ACA0AF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C59D8512192775100ACA0AF /* main.m */; };
 		4C59D85D2192778700ACA0AF /* WECustomTableViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C59D85B2192778700ACA0AF /* WECustomTableViewModel.m */; };
 		4C59D85E2192778700ACA0AF /* WECustomTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C59D85C2192778700ACA0AF /* WECustomTableViewController.m */; };
+		4C620A542192927E004C50D0 /* TwoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4C620A532192927E004C50D0 /* TwoViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +42,8 @@
 		4C59D85A2192778700ACA0AF /* WECustomTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WECustomTableViewController.h; sourceTree = "<group>"; };
 		4C59D85B2192778700ACA0AF /* WECustomTableViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WECustomTableViewModel.m; sourceTree = "<group>"; };
 		4C59D85C2192778700ACA0AF /* WECustomTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WECustomTableViewController.m; sourceTree = "<group>"; };
+		4C620A522192927E004C50D0 /* TwoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TwoViewController.h; sourceTree = "<group>"; };
+		4C620A532192927E004C50D0 /* TwoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TwoViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,6 +80,8 @@
 				4C59D8432192774F00ACA0AF /* AppDelegate.m */,
 				4C59D8452192774F00ACA0AF /* ViewController.h */,
 				4C59D8462192774F00ACA0AF /* ViewController.m */,
+				4C620A522192927E004C50D0 /* TwoViewController.h */,
+				4C620A532192927E004C50D0 /* TwoViewController.m */,
 				4C473A552192876F003E15F1 /* OneViewController.h */,
 				4C473A562192876F003E15F1 /* OneViewController.m */,
 				4C473A582192878B003E15F1 /* OneViewModel.h */,
@@ -180,6 +185,7 @@
 				4C59D85E2192778700ACA0AF /* WECustomTableViewController.m in Sources */,
 				4C59D8522192775100ACA0AF /* main.m in Sources */,
 				4C473A572192876F003E15F1 /* OneViewController.m in Sources */,
+				4C620A542192927E004C50D0 /* TwoViewController.m in Sources */,
 				4C59D85D2192778700ACA0AF /* WECustomTableViewModel.m in Sources */,
 				4C59D8442192774F00ACA0AF /* AppDelegate.m in Sources */,
 			);

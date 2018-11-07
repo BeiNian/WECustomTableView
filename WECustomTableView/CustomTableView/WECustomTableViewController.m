@@ -104,14 +104,26 @@
     return self.viewModel.dataSource.count;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [self tableView:tableView dequeueReusableCellWithIdentifier:@"UITableViewCell" forIndexPath:indexPath];
-    // fetch object
+    UITableViewCell *cell;
+    
+    if (self.delegate){
+    if ([self.delegate respondsToSelector:@selector(del_tableView:dequeueReusableCellWithIdentifier:forIndexPath:)])
+        cell = [self.delegate del_tableView:tableView dequeueReusableCellWithIdentifier:@"UITableViewCell" forIndexPath:indexPath];
+    }
+    else cell = [self tableView:tableView dequeueReusableCellWithIdentifier:@"UITableViewCell" forIndexPath:indexPath];
+    
     id object = nil;
-    if (self.tableView.style == UITableViewStyleGrouped ) object = self.viewModel.dataSource[indexPath.section][indexPath.row];
+    if (self.tableView.style == UITableViewStyleGrouped) object = self.viewModel.dataSource[indexPath.section][indexPath.row];
     if (self.tableView.style != UITableViewStyleGrouped) object = self.viewModel.dataSource[indexPath.row];
     
-    [self configureCell:cell atIndexPath:indexPath withObject:object];
-    return cell;
+    if (self.delegate){
+    if ([self.delegate respondsToSelector:@selector(del_configureCell:atIndexPath:withObject:)])
+        [self.delegate del_configureCell:cell atIndexPath:indexPath withObject:object];
+    }
+    else [self configureCell:cell atIndexPath:indexPath withObject:object];
+   
+    if (cell) return cell;
+    return [UITableViewCell new];
 }
 
 #pragma mark - Public
