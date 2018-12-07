@@ -15,6 +15,7 @@
     self = [super init];
     if (self) {
         [self initialize];
+
     }
     return self;
 } 
@@ -25,6 +26,12 @@
     
     self.page = 1;
     self.perPage = 10;
+}
+-(NSMutableArray *)dataSource{
+    if(!_dataSource){
+        _dataSource = [NSMutableArray array];
+    }
+    return _dataSource;
 }
 
 - (void)requestRemoteDataCommand:(void(^)(void))command {}

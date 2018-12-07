@@ -26,6 +26,7 @@
 }
 - (void)configureCell:(OneTableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath withObject:(id)object {
     cell.textLabel.text = (NSString *)object;
+    
 }
 
 

@@ -9,6 +9,7 @@
 #import "ViewController.h"
 #import "OneViewController.h"
 #import "TwoViewController.h"
+#import "FBChangeEnvironment.h"
 
 @interface ViewController ()
 
@@ -39,9 +40,11 @@
 }
 
 - (void)nonInheritanceRelationship {
-    OneViewController *one = [OneViewController new];
-    one.hidesBottomBarWhenPushed = YES;
-    [self.navigationController pushViewController:one animated:YES];
+    
+      [[FBChangeEnvironment sharedInstance]changeEnvironment];
+//    OneViewController *one = [OneViewController new];
+//    one.hidesBottomBarWhenPushed = YES;
+//    [self.navigationController pushViewController:one animated:YES];
 }
 - (void)InheritanceRelationship {
     

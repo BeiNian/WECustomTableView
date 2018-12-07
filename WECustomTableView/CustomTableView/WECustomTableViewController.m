@@ -11,6 +11,7 @@
 //
 
 #import "WECustomTableViewController.h"
+#import <MJRefresh.h>
 
 @interface WECustomTableViewController ()
  
@@ -38,19 +39,31 @@
 
 #pragma mark - Prive
 - (void)addDataSourceObserver {
-    [self.viewModel addObserver:self forKeyPath:@"dataSource" options:NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld context:nil];
+    [self.viewModel addObserver:self forKeyPath:@"dataSource" options:NSKeyValueObservingOptionNew context:nil];
 }
 - (void)removeDataSourceObserver {
     [self.viewModel removeObserver:self forKeyPath:@"dataSource"];
 }
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSKeyValueChangeKey,id> *)change context:(void *)context {
     [self.tableView reloadData];
+    NSLog(@"new %@",[change valueForKey:NSKeyValueChangeNewKey]);
+    NSArray *new = [change valueForKey:NSKeyValueChangeNewKey];
+    
+    if ([[new firstObject] count] == 0) {
+        NSLog(@"没有最新数据了");
+        [self.tableView.mj_footer endRefreshingWithNoMoreData];
+    } else {
+        [self.tableView.mj_footer resetNoMoreData];
+    }
+
+    
 }
 
 #pragma mark - Configure
-- (void)configurationTableViewStyle:(UITableViewStyle)style viewModel:(WECustomTableViewModel *)viewModel
-{
+- (void)configurationTableViewStyle:(UITableViewStyle)style viewModel:(WECustomTableViewModel *)viewModel {
+    
     self.viewModel = viewModel;
+    
     [self addDataSourceObserver];
     
     if (self.tableView)[self.tableView removeFromSuperview];
@@ -72,36 +85,39 @@
         self.tableView.estimatedSectionHeaderHeight = 0;
         self.tableView.estimatedSectionFooterHeight = 0;
     }
-
+    self.tableView.tableFooterView = [UIView new];
 }
 
 #pragma mark - 上下拉刷新事件
 /// 上拉事件
 - (void)tableViewDidTriggerFooterRefresh {
-    self.viewModel.page += 1;
-    [self.viewModel requestRemoteDataCommand:^{
+    self.tableView.mj_footer = [MJRefreshBackStateFooter footerWithRefreshingBlock:^{
+        self.viewModel.page += 1;
+        [self.viewModel requestRemoteDataCommand:^{
+            [self.tableView.mj_footer endRefreshing];
+        }];
     }];
 }
 
 /// 下拉事件
 - (void)tableViewDidTriggerHeaderRefresh {
-    self.viewModel.page = 1;
-    [self.viewModel requestRemoteDataCommand:^{
+    self.tableView.mj_header = [MJRefreshStateHeader headerWithRefreshingBlock:^{
+        self.viewModel.page = 1;
+        [self.viewModel requestRemoteDataCommand:^{
+            [self.tableView.mj_header endRefreshing];
+        }];
     }];
 }
 
 #pragma mark - UITableViewDataSource
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    if (self.tableView.style == UITableViewStyleGrouped) {
-        return self.viewModel.dataSource.count;
-    }
-    return 1;
+    
+    return self.viewModel.dataSource.count;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    if (self.tableView.style == UITableViewStyleGrouped) {
-        return [self.viewModel.dataSource[section] count];
-    }
-    return self.viewModel.dataSource.count;
+    
+    return [self.viewModel.dataSource[section] count];
+    
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell;
@@ -112,9 +128,9 @@
     }
     else cell = [self tableView:tableView dequeueReusableCellWithIdentifier:@"UITableViewCell" forIndexPath:indexPath];
     
-    id object = nil;
-    if (self.tableView.style == UITableViewStyleGrouped) object = self.viewModel.dataSource[indexPath.section][indexPath.row];
-    if (self.tableView.style != UITableViewStyleGrouped) object = self.viewModel.dataSource[indexPath.row];
+    id object = nil; 
+    
+    object = self.viewModel.dataSource[indexPath.section][indexPath.row];
     
     if (self.delegate){
     if ([self.delegate respondsToSelector:@selector(del_configureCell:atIndexPath:withObject:)])

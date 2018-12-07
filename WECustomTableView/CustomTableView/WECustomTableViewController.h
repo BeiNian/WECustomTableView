@@ -12,7 +12,7 @@
 @protocol WECustomTableViewControllerDelegate<NSObject>
 
 - (UITableViewCell *)del_tableView:(UITableView *)tableView dequeueReusableCellWithIdentifier:(NSString *)identifier forIndexPath:(NSIndexPath *)indexPath;
-/// Override configure cell data
+
 - (void)del_configureCell:(UITableViewCell *)cell atIndexPath:(NSIndexPath *)indexPath withObject:(id)object;
 @end
 
