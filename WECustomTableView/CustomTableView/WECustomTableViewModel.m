@@ -34,6 +34,9 @@
     return _dataSource;
 }
 
-- (void)requestRemoteDataCommand:(void(^)(void))command {}
+- (void)requestRemoteDataCommand:(void(^)(void))command {
+    // 采用此方法赋值，如果如果没有赋值一个空数组
+    // [[self mutableArrayValueForKeyPath:@"dataSource"] addObject:array]; 
+}
 
 @end
